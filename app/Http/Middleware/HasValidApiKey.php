@@ -20,6 +20,11 @@ class HasValidApiKey
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // we only care about API requests
+        if (!str_starts_with($request->path(), "api/")) {
+            return $next($request);
+        }
+
         $apiKey = $request->get(self::QUERY_KEY_NAME) ?? $request->header(self::HEADER_KEY_NAME);
 
         if (!$apiKey) {
