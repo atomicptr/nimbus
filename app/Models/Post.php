@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Post extends Model
 {
     use HasFactory;
+    use Sluggable;
 
     public function author(): HasOne
     {
@@ -21,9 +25,9 @@ class Post extends Model
         return $this->hasOne(PostSeries::class);
     }
 
-    public function tags(): HasMany
+    public function tags(): BelongsToMany
     {
-        return $this->hasMany(Tag::class);
+        return $this->belongsToMany(Tag::class, "tagged_posts");
     }
 
     public function links(): HasMany
@@ -31,8 +35,17 @@ class Post extends Model
         return $this->hasMany(Link::class);
     }
 
-    public function blog(): HasOne
+    public function blog(): BelongsTo
     {
-        return $this->hasOne(Blog::class);
+        return $this->belongsTo(Blog::class);
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            "slug" => [
+                "source" => "title",
+            ],
+        ];
     }
 }

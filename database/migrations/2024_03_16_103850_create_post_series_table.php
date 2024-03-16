@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
 
             $table->string("title", 255);
-            $table->string("slug", 255)->unique();
+            $table->string("slug", 255);
             $table->string("description", 255)->nullable();
 
             $table->foreignIdFor(Blog::class);

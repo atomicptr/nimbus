@@ -8,8 +8,8 @@ use App\Http\Controllers\Api\TagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::apiResource("authors", AuthorController::class);
-Route::apiResource("blogs", BlogController::class);
-Route::apiResource("blogs.posts", PostController::class);
-Route::apiResource("blogs.series", PostSeriesController::class);
-Route::apiResource("blogs.tags", TagController::class);
+Route::apiResource("blogs", BlogController::class)->only(["index", "show"]);
+Route::apiResource("blogs.posts", PostController::class)->scoped(["posts" => "blog"])->only(["index", "show"]);
+Route::apiResource("blogs.series", PostSeriesController::class)->scoped(["post_series" => "blog"])->only(["index", "show"]);
+Route::apiResource("blogs.tags", TagController::class)->scoped(["tags" => "blog"])->only(["index", "show"]);
+Route::apiResource("blogs.authors", AuthorController::class)->only(["index", "show"]);

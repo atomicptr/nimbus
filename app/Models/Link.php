@@ -14,4 +14,9 @@ class Link extends Model
     {
         return $this->hasOne(Blog::class);
     }
+
+    public function post(): HasOne
+    {
+        return $this->hasOne(Post::class);
+    }
 }

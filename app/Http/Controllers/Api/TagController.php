@@ -3,32 +3,21 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Resources\TagResource;
+use App\Models\Blog;
+use App\Models\Tag;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class TagController extends Controller
 {
-    public function index()
+    public function index(Blog $blog): AnonymousResourceCollection
     {
-        //
+        $tags = $blog->tags();
+        return TagResource::collection($tags->paginate(50));
     }
 
-    public function store(Request $request)
+    public function show(Blog $blog, Tag $tag): TagResource
     {
-        //
-    }
-
-    public function show(string $id)
-    {
-        //
-    }
-
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    public function destroy(string $id)
-    {
-        //
+        return TagResource::make($tag);
     }
 }

@@ -1,11 +1,11 @@
 {
-    "name": "laravel/laravel",
+    "name": "atomicptr/nimbus",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
-    "license": "MIT",
+    "description": "A multi-project headless blog system made for projects like Sveltekit.",
+    "license": "AGPLv3",
     "require": {
         "php": "^8.2",
+        "cviebrock/eloquent-sluggable": "^11.0",
         "laravel/framework": "^11.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9"

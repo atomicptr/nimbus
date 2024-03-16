@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Blog;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,6 +21,11 @@ return new class extends Migration
 
             $table->timestamps();
         });
+
+        Schema::create('user_blogs', function (Blueprint $table) {
+            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Blog::class);
+        });
     }
 
     /**
@@ -27,5 +34,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('blogs');
+        Schema::dropIfExists('user_blogs');
     }
 };

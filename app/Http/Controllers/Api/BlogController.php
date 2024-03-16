@@ -3,32 +3,21 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BlogResource;
+use App\Models\Blog;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class BlogController extends Controller
 {
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
-        //
+        // TODO: for the current user api key
+        return BlogResource::collection(Blog::all());
     }
 
-    public function store(Request $request)
+    public function show(Blog $blog): BlogResource
     {
-        //
-    }
-
-    public function show(string $id)
-    {
-        //
-    }
-
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    public function destroy(string $id)
-    {
-        //
+        return BlogResource::make($blog);
     }
 }
