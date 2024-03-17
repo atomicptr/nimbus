@@ -11,6 +11,7 @@ use Filament\Facades\Filament;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -54,9 +55,9 @@ class PostResource extends Resource
                         Textarea::make('description')->nullable(),
                     ])
                     ->createOptionUsing(function (array $data) use ($post) {
-                        return $post->postSeries()->create([...$data, 'blog_id' => Filament::getTenant()->id])->getKey();
+                        return $post->postSeries()->create([...$data])->getKey();
                     }),
-                Select::make('tag_id')
+                Select::make('tags')
                     ->label('Tags')
                     ->multiple()
                     ->relationship(name: 'tags', titleAttribute: 'title')
@@ -65,9 +66,28 @@ class PostResource extends Resource
                         TextInput::make('title')->required(),
                     ])
                     ->createOptionUsing(function (array $data) use ($post) {
-                        return $post->tags()->create([...$data, 'blog_id' => Filament::getTenant()->id])->getKey();
+                        return $post->tags()->create([...$data])->getKey();
                     })
                     ->hiddenOn(['create']),
+                Repeater::make('links')
+                    ->label('Links')
+                    ->relationship()
+                    ->schema([
+                        TextInput::make('title')
+                            ->required(),
+                        Textarea::make('description')
+                            ->nullable(),
+                        TextInput::make('link')
+                            ->required()
+                            ->url(),
+                        TextInput::make('archive_link')
+                            ->nullable(),
+                    ])
+                    ->addActionLabel('Add Link')
+                    ->itemLabel(fn (array $state): ?string => $state['title'] ? ($state['link'] ? $state['title'].' - '.$state['link'] : $state['title']) : null)
+                    ->collapsible()
+                    ->collapsed()
+                    ->columns(1),
                 Section::make('Meta')
                     ->description('Meta information for this post.')
                     ->schema([
@@ -81,7 +101,7 @@ class PostResource extends Resource
                         TextInput::make('slug')
                             ->required()
                             ->maxLength(255)
-                            ->unique(),
+                            ->unique(ignoreRecord: true),
                         DateTimePicker::make('created_at')
                             ->label('Date'),
                     ]),

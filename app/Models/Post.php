@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\PostPublishingStatus;
+use App\Traits\AddBlogIdOnBoot;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,15 +11,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-enum PostPublishingStatus
-{
-    case draft;
-    case timed;
-    case published;
-}
-
 class Post extends Model
 {
+    use AddBlogIdOnBoot;
     use HasFactory;
     use Sluggable;
 
