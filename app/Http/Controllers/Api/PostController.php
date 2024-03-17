@@ -18,7 +18,8 @@ class PostController extends Controller
             ->where(function (Builder $query) {
                 $query->where('starttime', null)
                     ->orWhere('starttime', '<=', now()->getTimestamp() * 1000);
-            });
+            })
+            ->orderBy('created_at', 'desc');
 
         return PostResource::collection($posts->paginate(50));
     }
