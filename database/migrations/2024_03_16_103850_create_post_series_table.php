@@ -15,9 +15,9 @@ return new class extends Migration
         Schema::create('post_series', function (Blueprint $table) {
             $table->id();
 
-            $table->string("title", 255);
-            $table->string("slug", 255);
-            $table->string("description", 255)->nullable();
+            $table->string('title', 255);
+            $table->string('slug', 255);
+            $table->string('description', 255)->nullable();
 
             $table->foreignIdFor(Blog::class);
             $table->timestamps();

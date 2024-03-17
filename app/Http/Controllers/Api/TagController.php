@@ -13,6 +13,7 @@ class TagController extends Controller
     public function index(Blog $blog): AnonymousResourceCollection
     {
         $tags = $blog->tags();
+
         return TagResource::collection($tags->paginate(50));
     }
 

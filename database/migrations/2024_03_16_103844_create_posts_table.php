@@ -21,10 +21,10 @@ return new class extends Migration
             $table->string('slug', 255);
             $table->text('content');
             $table->foreignIdFor(PostSeries::class)->nullable();
-            $table->foreignIdFor(User::class, "author_id");
+            $table->foreignIdFor(User::class, 'author_id');
             $table->boolean('is_draft')->default(true);
-            $table->dateTime("starttime")->nullable();
-            $table->string("promo_image", 255)->nullable();
+            $table->dateTime('starttime')->nullable();
+            $table->string('promo_image', 255)->nullable();
 
             $table->foreignIdFor(Blog::class);
             $table->timestamps();

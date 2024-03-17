@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Tag>
@@ -18,8 +17,8 @@ class TagFactory extends Factory
     public function definition(): array
     {
         return [
-            "title" => fake()->sentence(3),
-            "description" => fake()->sentence(10),
+            'title' => fake()->sentence(3),
+            'description' => fake()->sentence(10),
         ];
     }
 }

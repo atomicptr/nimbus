@@ -2,19 +2,19 @@
 
 namespace App\Models;
 
+use Filament\Models\Contracts\HasName;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
-class Blog extends Model
+class Blog extends Model implements HasName
 {
     use HasFactory;
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, "user_blogs");
+        return $this->belongsToMany(User::class, 'user_blogs');
     }
 
     public function posts(): HasMany
@@ -35,5 +35,10 @@ class Blog extends Model
     public function links(): HasMany
     {
         return $this->hasMany(Link::class);
+    }
+
+    public function getFilamentName(): string
+    {
+        return $this->title;
     }
 }

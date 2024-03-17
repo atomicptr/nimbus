@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('api_keys', function (Blueprint $table) {
             $table->id();
 
-            $table->uuid("api_key")->unique()->index();
-            $table->string("title", 255);
+            $table->uuid('api_key')->unique()->index();
+            $table->string('title', 255);
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Blog::class);
 

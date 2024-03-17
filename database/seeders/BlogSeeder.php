@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Blog;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class BlogSeeder extends Seeder
@@ -14,12 +13,15 @@ class BlogSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = User::all();
-
         // generate 3 blogs
         for ($i = 0; $i < 3; $i++) {
-            $user = $users->random();
-            $user->blogs()->attach(Blog::factory()->create());
+            Blog::factory()->create();
         }
+
+        User::all()->each(function (User $user) {
+            Blog::all()->random(random_int(1, 3))->each(function (Blog $blog) use ($user) {
+                $user->blogs()->attach($blog->id);
+            });
+        });
     }
 }

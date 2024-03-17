@@ -14,16 +14,17 @@ class PostController extends Controller
     public function index(Blog $blog): AnonymousResourceCollection
     {
         $posts = $blog->posts()
-            ->where("is_draft", false)
-            ->where(function(Builder $query) {
-                $query->where("starttime", null)
-                    ->orWhere("starttime", "<=", now()->getTimestamp() * 1000);
+            ->where('is_draft', false)
+            ->where(function (Builder $query) {
+                $query->where('starttime', null)
+                    ->orWhere('starttime', '<=', now()->getTimestamp() * 1000);
             });
+
         return PostResource::collection($posts->paginate(50));
     }
 
     public function show(Blog $blog, Post $post): PostResource
     {
-        return PostResource::make($post->load(["links", "tags"]));
+        return PostResource::make($post->load(['links', 'tags']));
     }
 }

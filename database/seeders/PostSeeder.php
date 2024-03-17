@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Blog;
-use App\Models\Link;
 use App\Models\Post;
 use Illuminate\Database\Seeder;
 use Random\RandomException;
@@ -12,6 +11,7 @@ class PostSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     *
      * @throws RandomException
      */
     public function run(): void
@@ -24,8 +24,8 @@ class PostSeeder extends Seeder
 
             /** @var Post $post */
             Post::factory()->create([
-                "author_id" => $author->id,
-                "blog_id" => $blog->id,
+                'author_id' => $author->id,
+                'blog_id' => $blog->id,
             ]);
         }
     }

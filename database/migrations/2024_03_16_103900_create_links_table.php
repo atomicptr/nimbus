@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('links', function (Blueprint $table) {
             $table->id();
 
-            $table->string("title", 255);
-            $table->string("description", 255)->nullable();
-            $table->string("link", 255);
-            $table->string("archive_link", 255)->nullable();
+            $table->string('title', 255);
+            $table->string('description', 255)->nullable();
+            $table->string('link', 255);
+            $table->string('archive_link', 255)->nullable();
             $table->foreignIdFor(Post::class);
 
             $table->foreignIdFor(Blog::class);

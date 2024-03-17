@@ -8,26 +8,34 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+
+enum PostPublishingStatus
+{
+    case draft;
+    case timed;
+    case published;
+}
 
 class Post extends Model
 {
     use HasFactory;
     use Sluggable;
 
-    public function author(): HasOne
+    protected $fillable = ['title', 'content', 'post_series_id', 'author_id', 'blog_id', 'is_draft', 'starttime', 'promo_image'];
+
+    public function author(): BelongsTo
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function postSeries(): ?HasOne
+    public function postSeries(): BelongsTo
     {
-        return $this->hasOne(PostSeries::class);
+        return $this->belongsTo(PostSeries::class);
     }
 
     public function tags(): BelongsToMany
     {
-        return $this->belongsToMany(Tag::class, "tagged_posts");
+        return $this->belongsToMany(Tag::class, 'tagged_posts');
     }
 
     public function links(): HasMany
@@ -43,9 +51,22 @@ class Post extends Model
     public function sluggable(): array
     {
         return [
-            "slug" => [
-                "source" => "title",
+            'slug' => [
+                'source' => 'title',
             ],
         ];
+    }
+
+    public function publishingStatus(): PostPublishingStatus
+    {
+        if ($this->is_draft) {
+            return PostPublishingStatus::draft;
+        }
+
+        if ($this->starttime !== null && $this->starttime > now()) {
+            return PostPublishingStatus::timed;
+        }
+
+        return PostPublishingStatus::published;
     }
 }

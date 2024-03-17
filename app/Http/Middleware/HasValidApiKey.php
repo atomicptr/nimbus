@@ -12,8 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class HasValidApiKey
 {
-    private const QUERY_KEY_NAME = "api_key";
-    private const HEADER_KEY_NAME = "X-Nimbus-Api-Key";
+    private const QUERY_KEY_NAME = 'api_key';
+
+    private const HEADER_KEY_NAME = 'X-Nimbus-Api-Key';
 
     /**
      * @throws AuthorizationException
@@ -21,21 +22,21 @@ class HasValidApiKey
     public function handle(Request $request, Closure $next): Response
     {
         // we only care about API requests
-        if (!str_starts_with($request->path(), "api/")) {
+        if (! str_starts_with($request->path(), 'api/')) {
             return $next($request);
         }
 
         $apiKey = $request->get(self::QUERY_KEY_NAME) ?? $request->header(self::HEADER_KEY_NAME);
 
-        if (!$apiKey) {
-            throw new AuthorizationException("Invalid API key");
+        if (! $apiKey) {
+            throw new AuthorizationException('Invalid API key');
         }
 
         /** @var ApiKey $keyRecord */
-        $keyRecord = ApiKey::query()->where("api_key", $apiKey)->first();
+        $keyRecord = ApiKey::query()->where('api_key', $apiKey)->first();
 
-        if (!$keyRecord) {
-            throw new AuthorizationException("Invalid API key");
+        if (! $keyRecord) {
+            throw new AuthorizationException('Invalid API key');
         }
 
         /** @var User $user */
@@ -45,10 +46,10 @@ class HasValidApiKey
         $response = $next($request);
 
         /** @var Blog|null $blog */
-        $blog = $request->route()->parameter("blog");
+        $blog = $request->route()->parameter('blog');
 
         // if it's a non blog scoped resource we don't give a shit what this is
-        if (!$blog) {
+        if (! $blog) {
             return $response;
         }
 
@@ -58,6 +59,6 @@ class HasValidApiKey
             return $response;
         }
 
-        throw new AuthorizationException("Invalid API key");
+        throw new AuthorizationException('Invalid API key');
     }
 }

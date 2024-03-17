@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Blog;
 use App\Models\PostSeries;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Random\RandomException;
 
@@ -12,6 +11,7 @@ class PostSeriesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     *
      * @throws RandomException
      */
     public function run(): void
@@ -26,7 +26,7 @@ class PostSeriesSeeder extends Seeder
                         continue;
                     }
 
-                    $series = PostSeries::factory()->create(["blog_id" => $blog->id]);
+                    $series = PostSeries::factory()->create(['blog_id' => $blog->id]);
                     $post->post_series_id = $series->id;
                     $post->save();
                 }

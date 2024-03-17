@@ -17,9 +17,9 @@ class LinkFactory extends Factory
     public function definition(): array
     {
         return [
-            "link" => fake()->url,
-            "title" => fake()->sentence(3),
-            "description" => fake()->paragraph(1),
+            'link' => fake()->url,
+            'title' => fake()->sentence(3),
+            'description' => fake()->paragraph(1),
         ];
     }
 }
