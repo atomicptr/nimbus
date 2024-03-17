@@ -37,6 +37,11 @@ class Blog extends Model implements HasName
         return $this->hasMany(Link::class);
     }
 
+    public function apiKeys(): HasMany
+    {
+        return $this->hasMany(ApiKey::class);
+    }
+
     public function getFilamentName(): string
     {
         return $this->title;

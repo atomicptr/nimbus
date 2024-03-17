@@ -10,6 +10,8 @@ class ApiKey extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['title', 'api_key'];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -18,5 +20,14 @@ class ApiKey extends Model
     public function blog(): BelongsTo
     {
         return $this->belongsTo(Blog::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function (ApiKey $apiKey) {
+            $apiKey->api_key = uuid_create();
+            $apiKey->user_id = auth()->user()->id;
+        });
     }
 }
