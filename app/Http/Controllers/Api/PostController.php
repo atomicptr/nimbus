@@ -21,11 +21,11 @@ class PostController extends Controller
             })
             ->orderBy('created_at', 'desc');
 
-        return PostResource::collection($posts->paginate(50));
+        return PostResource::collection($posts->with(['tags'])->paginate(50));
     }
 
     public function show(Blog $blog, Post $post): PostResource
     {
-        return PostResource::make($post->load(['links', 'tags']));
+        return PostResource::make($post->load(['links', 'tags', 'author']));
     }
 }
