@@ -24,6 +24,8 @@ jobs:
         run: |
           composer install
       - name: Tests
+        env:
+          APP_ENV: ${{ secrets.APP_ENV }}
         run: php artisan test
       - name: Lint
         run: ./vendor/bin/pint --test
