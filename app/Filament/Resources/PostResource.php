@@ -68,10 +68,9 @@ class PostResource extends Resource
                         return $post->tags()->create([...$data, 'blog_id' => Filament::getTenant()->id])->getKey();
                     })
                     ->hiddenOn(['create']),
-                Section::make('Publishing')
-                    ->description('Settings for publishing this post.')
+                Section::make('Meta')
+                    ->description('Meta information for this post.')
                     ->schema([
-                        // TODO: filter authors by the ones associated to the current blog
                         Select::make('author_id')
                             ->required()
                             ->relationship(name: 'author', titleAttribute: 'name')
@@ -79,6 +78,16 @@ class PostResource extends Resource
                                 Filament::getTenant()->users()->pluck('name', 'id'),
                             )
                             ->default(auth()->user()->id),
+                        TextInput::make('slug')
+                            ->required()
+                            ->maxLength(255)
+                            ->unique(),
+                        DateTimePicker::make('created_at')
+                            ->label('Date'),
+                    ]),
+                Section::make('Publishing')
+                    ->description('Settings for publishing this post.')
+                    ->schema([
                         Toggle::make('is_draft')
                             ->label('Is Draft?')
                             ->default(true),
@@ -98,6 +107,9 @@ class PostResource extends Resource
                 TextColumn::make('created_at')
                     ->sortable()
                     ->dateTime(),
+                TextColumn::make('post_series_id')
+                    ->label('Post Series')
+                    ->formatStateUsing(fn (int $state) => PostSeries::query()->find($state)?->title),
                 IconColumn::make('is_draft')
                     ->label('Published')
                     ->icon(fn (Post $post) => match ($post->publishingStatus()) {
