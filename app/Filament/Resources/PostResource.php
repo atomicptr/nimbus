@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\PostPublishingStatus;
 use App\Filament\Resources\PostResource\Pages;
 use App\Models\Post;
-use App\Models\PostPublishingStatus;
 use App\Models\PostSeries;
 use App\Models\Tag;
 use Filament\Facades\Filament;
