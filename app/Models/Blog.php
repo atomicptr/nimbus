@@ -12,6 +12,8 @@ class Blog extends Model implements HasName
 {
     use HasFactory;
 
+    protected $fillable = ['title', 'description'];
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'user_blogs');

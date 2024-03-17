@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Tenancy\AddNewBlog;
 use App\Models\Blog;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -56,6 +57,7 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->tenant(Blog::class)
-            ->tenantRoutePrefix('blog');
+            ->tenantRoutePrefix('blog')
+            ->tenantRegistration(AddNewBlog::class);
     }
 }
