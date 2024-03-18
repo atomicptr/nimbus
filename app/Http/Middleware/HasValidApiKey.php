@@ -8,6 +8,7 @@ use App\Models\User;
 use Closure;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Symfony\Component\HttpFoundation\Response;
 
 class HasValidApiKey
@@ -21,6 +22,11 @@ class HasValidApiKey
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // ignore debug context
+        if (App::hasDebugModeEnabled()) {
+            return $next($request);
+        }
+
         // we only care about API requests
         if (! str_starts_with($request->path(), 'api/')) {
             return $next($request);
