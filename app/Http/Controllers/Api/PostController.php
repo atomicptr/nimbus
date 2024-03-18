@@ -35,6 +35,9 @@ class PostController extends Controller
         $postSeries = $post->postSeries;
 
         if ($postSeries) {
+            $postSeries->load('posts');
+
+            // TODO: can probably be done without asking the DB but for our use case it also kinda does not matter rn
             $prev = $postSeries->posts()->where('created_at', '<', $post->created_at)->orderBy('created_at', 'desc')->first();
             $next = $postSeries->posts()->where('created_at', '>', $post->created_at)->orderBy('created_at')->first();
 
