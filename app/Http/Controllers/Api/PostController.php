@@ -7,20 +7,13 @@ use App\Http\Resources\PostResource;
 use App\Models\Blog;
 use App\Models\Post;
 use App\Models\PostSeries;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class PostController extends Controller
 {
     public function index(Blog $blog): AnonymousResourceCollection
     {
-        $posts = $blog->posts()
-            ->where('is_draft', false)
-            ->where(function (Builder $query) {
-                $query->where('starttime', null)
-                    ->orWhere('starttime', '<=', now()->getTimestamp() * 1000);
-            })
-            ->orderBy('created_at', 'desc');
+        $posts = $blog->posts()->visible()->orderBy('created_at', 'desc');
 
         return PostResource::collection($posts->with(['tags'])->paginate(50));
     }

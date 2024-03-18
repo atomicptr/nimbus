@@ -101,7 +101,8 @@ class PostResource extends Resource
                         TextInput::make('slug')
                             ->required()
                             ->maxLength(255)
-                            ->unique(ignoreRecord: true),
+                            ->unique(ignoreRecord: true)
+                            ->hiddenOn(['create']),
                         DateTimePicker::make('created_at')
                             ->label('Date'),
                     ]),

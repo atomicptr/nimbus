@@ -19,7 +19,7 @@ class Tag extends Model
 
     public function posts(): BelongsToMany
     {
-        return $this->belongsToMany(Post::class, 'tagged_posts');
+        return $this->belongsToMany(Post::class, 'tagged_posts')->visible();
     }
 
     public function blog(): BelongsTo

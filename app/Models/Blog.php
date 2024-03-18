@@ -21,7 +21,7 @@ class Blog extends Model implements HasName
 
     public function posts(): HasMany
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class)->visible();
     }
 
     public function postSeries(): HasMany

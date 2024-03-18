@@ -18,7 +18,7 @@ class PostSeries extends Model
 
     public function posts(): HasMany
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class)->visible();
     }
 
     public function links(): HasMany
