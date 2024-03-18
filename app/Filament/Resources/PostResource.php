@@ -89,6 +89,7 @@ class PostResource extends Resource
                     ->itemLabel(fn (array $state): ?string => $state['title'] ? ($state['link'] ? $state['title'].' - '.$state['link'] : $state['title']) : null)
                     ->collapsible()
                     ->collapsed()
+                    ->defaultItems(0)
                     ->columns(1),
                 Section::make('Meta')
                     ->description('Meta information for this post.')
