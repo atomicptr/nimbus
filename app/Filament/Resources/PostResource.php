@@ -41,9 +41,11 @@ class PostResource extends Resource
                     ->required()
                     ->maxLength(255),
                 MarkdownEditor::make('content')
-                    ->required(),
+                    ->required()
+                    ->fileAttachmentsDisk(env('APP_STORAGE_DRIVER', 'local')),
                 FileUpload::make('promo_image')
                     ->label('Image')
+                    ->disk(env('APP_STORAGE_DRIVER', 'local'))
                     ->nullable()
                     ->image(),
                 Select::make('post_series_id')
