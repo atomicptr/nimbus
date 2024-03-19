@@ -32,9 +32,6 @@ class PostResource extends Resource
 
     public static function form(Form $form): Form
     {
-        /** @var Post $post */
-        $post = $form->getModelInstance();
-
         return $form
             ->schema([
                 TextInput::make('title')
@@ -56,7 +53,7 @@ class PostResource extends Resource
                         TextInput::make('title')->required(),
                         Textarea::make('description')->nullable(),
                     ])
-                    ->createOptionUsing(function (array $data) use ($post) {
+                    ->createOptionUsing(function (Post $post, array $data) {
                         return $post->postSeries()->create([...$data])->getKey();
                     }),
                 Select::make('tags')
@@ -67,7 +64,7 @@ class PostResource extends Resource
                     ->createOptionForm([
                         TextInput::make('title')->required(),
                     ])
-                    ->createOptionUsing(function (array $data) use ($post) {
+                    ->createOptionUsing(function (Post $post, array $data) {
                         return $post->tags()->create([...$data])->getKey();
                     })
                     ->hiddenOn(['create']),
