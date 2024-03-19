@@ -13,7 +13,7 @@ class PostController extends Controller
 {
     public function index(Blog $blog): AnonymousResourceCollection
     {
-        $posts = $blog->posts()->visible()->orderBy('created_at', 'desc');
+        $posts = $blog->posts()->visible()->orderBy('publish_date', 'desc');
 
         return PostResource::collection($posts->with(['tags'])->paginate(50));
     }
@@ -31,8 +31,8 @@ class PostController extends Controller
             $postSeries->load('posts');
 
             // TODO: can probably be done without asking the DB but for our use case it also kinda does not matter rn
-            $prev = $postSeries->posts()->where('created_at', '<', $post->created_at)->orderBy('created_at', 'desc')->first();
-            $next = $postSeries->posts()->where('created_at', '>', $post->created_at)->orderBy('created_at')->first();
+            $prev = $postSeries->posts()->where('publish_date', '<', $post->publish_date)->orderBy('publish_date', 'desc')->first();
+            $next = $postSeries->posts()->where('publish_date', '>', $post->publish_date)->orderBy('publish_date')->first();
 
             $postSeriesMeta = $prev || $next ? [
                 'title' => $postSeries->title,

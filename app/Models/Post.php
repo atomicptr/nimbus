@@ -18,7 +18,7 @@ class Post extends Model
     use HasFactory;
     use Sluggable;
 
-    protected $fillable = ['title', 'content', 'post_series_id', 'author_id', 'blog_id', 'is_draft', 'starttime', 'promo_image'];
+    protected $fillable = ['title', 'content', 'post_series_id', 'author_id', 'blog_id', 'is_draft', 'starttime', 'promo_image', 'publish_date'];
 
     public function author(): BelongsTo
     {

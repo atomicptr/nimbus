@@ -101,10 +101,9 @@ class PostResource extends Resource
                         TextInput::make('slug')
                             ->required()
                             ->maxLength(255)
-                            ->unique(ignoreRecord: true)
-                            ->hiddenOn(['create']),
-                        DateTimePicker::make('created_at')
-                            ->label('Date')
+                            ->unique(ignoreRecord: true),
+                        DateTimePicker::make('publish_date')
+                            ->label('Publish Date')
                             ->time(false),
                     ]),
                 Section::make('Publishing')
@@ -126,7 +125,8 @@ class PostResource extends Resource
             ->columns([
                 TextColumn::make('title')
                     ->searchable(),
-                TextColumn::make('created_at')
+                TextColumn::make('publish_date')
+                    ->label('Publish Date')
                     ->sortable()
                     ->dateTime(),
                 TextColumn::make('post_series_id')
@@ -154,7 +154,7 @@ class PostResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-            ->defaultSort('created_at', 'desc');
+            ->defaultSort('publish_date', 'desc');
     }
 
     public static function getRelations(): array

@@ -21,7 +21,7 @@ class PostFactory extends Factory
             'content' => fake()->paragraph,
             'is_draft' => fake()->boolean(10),
             'promo_image' => fake()->imageUrl,
-            'created_at' => fake()->dateTimeBetween('-1 year', 'now'),
+            'publish_date' => fake()->dateTimeBetween('-1 year', 'now'),
         ];
     }
 }
