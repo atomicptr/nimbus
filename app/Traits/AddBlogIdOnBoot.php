@@ -11,7 +11,7 @@ trait AddBlogIdOnBoot
     {
         parent::boot();
         static::creating(function (Model $model) {
-            $model->blog_id = Filament::getTenant()?->id;
+            $model->blog_id ??= $model->post ? $model->post->blog_id : Filament::getTenant()?->id;
         });
     }
 }

@@ -26,8 +26,8 @@ class ApiKey extends Model
     {
         parent::boot();
         static::creating(function (ApiKey $apiKey) {
-            $apiKey->api_key = uuid_create();
-            $apiKey->user_id = auth()->user()->id;
+            $apiKey->api_key ??= uuid_create();
+            $apiKey->user_id ??= auth()->user()->id;
         });
     }
 }

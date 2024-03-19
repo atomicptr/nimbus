@@ -17,7 +17,7 @@ class PostSeriesSeeder extends Seeder
     public function run(): void
     {
         Blog::all()->each(function (Blog $blog) {
-            $count = $blog->posts()->count();
+            $count = floor($blog->posts()->count() / 3.0);
             for ($i = 0; $i < random_int(1, $count); $i++) {
                 $posts = $blog->posts()->get()->random(random_int(1, $count));
 

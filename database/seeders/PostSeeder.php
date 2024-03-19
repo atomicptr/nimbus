@@ -23,7 +23,7 @@ class PostSeeder extends Seeder
             $author = $blog->users()->get()->random();
 
             /** @var Post $post */
-            Post::factory()->create([
+            Post::factory(1)->create([
                 'author_id' => $author->id,
                 'blog_id' => $blog->id,
             ]);
