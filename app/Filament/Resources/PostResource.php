@@ -107,7 +107,8 @@ class PostResource extends Resource
                             ->unique(ignoreRecord: true)
                             ->hiddenOn(['create']),
                         DateTimePicker::make('created_at')
-                            ->label('Date'),
+                            ->label('Date')
+                            ->time(false),
                     ]),
                 Section::make('Publishing')
                     ->description('Settings for publishing this post.')
