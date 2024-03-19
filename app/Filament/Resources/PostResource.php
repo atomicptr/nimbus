@@ -18,11 +18,13 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 
 class PostResource extends Resource
 {
@@ -36,7 +38,9 @@ class PostResource extends Resource
             ->schema([
                 TextInput::make('title')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
                 MarkdownEditor::make('content')
                     ->required()
                     ->fileAttachmentsDisk(env('APP_STORAGE_DRIVER', 'local')),
@@ -104,6 +108,8 @@ class PostResource extends Resource
                             ->unique(ignoreRecord: true),
                         DateTimePicker::make('publish_date')
                             ->label('Publish Date')
+                            ->required()
+                            ->default(now())
                             ->time(false),
                     ]),
                 Section::make('Publishing')
@@ -113,7 +119,8 @@ class PostResource extends Resource
                             ->label('Is Draft?')
                             ->default(true),
                         DateTimePicker::make('starttime')
-                            ->label('Publish after'),
+                            ->label('Publish after')
+                            ->seconds(false),
                     ]),
             ])
             ->columns(1);
