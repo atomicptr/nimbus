@@ -32,7 +32,7 @@ class Post extends Model
 
     public function tags(): BelongsToMany
     {
-        return $this->belongsToMany(Tag::class, 'tagged_posts');
+        return $this->belongsToMany(Tag::class, 'tagged_posts')->orderBy('slug');
     }
 
     public function links(): HasMany
