@@ -13,6 +13,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        if (env('TRUST_ALL_PROXIES')) {
+            $middleware->trustProxies(at: '*');
+        }
         $middleware->append([
             HasValidApiKey::class,
         ]);
