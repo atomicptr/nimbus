@@ -12,7 +12,7 @@ class Link extends Model
     use AddBlogIdOnBoot;
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'link', 'archive_link'];
+    protected $fillable = ['title', 'description', 'link', 'archive_link', 'sort'];
 
     public function blog(): HasOne
     {

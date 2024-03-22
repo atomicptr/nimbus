@@ -91,6 +91,9 @@ class PostResource extends Resource
                     ->collapsible()
                     ->collapsed()
                     ->defaultItems(0)
+                    ->orderColumn('sort')
+                    ->reorderable(true)
+                    ->reorderableWithButtons()
                     ->columns(1),
                 Section::make('Meta')
                     ->description('Meta information for this post.')
