@@ -27,6 +27,11 @@ RUN mkdir -p /app/bootstrap/cache && \
     touch /app/storage/logs/octane-server-state.json
 
 RUN composer install
+RUN php artisan filament:cache-components
+
+# necessary for optimize
+RUN mkdir -p resources/views
+RUN php artisan optimize
 
 HEALTHCHECK --interval=30s --timeout=5s CMD curl -f http://localhost:8000/up || exit 1
 
