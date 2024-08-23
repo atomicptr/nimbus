@@ -35,4 +35,4 @@ RUN php artisan optimize
 
 HEALTHCHECK --interval=30s --timeout=5s CMD curl -f http://localhost:8000/up || exit 1
 
-CMD ["php", "artisan", "octane:start", "--port=8000"]
+ENTRYPOINT ["/app/boot.sh"]
