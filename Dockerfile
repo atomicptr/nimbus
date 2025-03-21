@@ -1,6 +1,7 @@
 FROM ghcr.io/atomicptr/boxed-php:8.4
 
 COPY . /app
+COPY pre_boot.sh /pre_boot.sh
 
 ENV APP_NAME=Nimbus
 ENV APP_ENV=production
